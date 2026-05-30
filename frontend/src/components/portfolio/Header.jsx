@@ -41,7 +41,7 @@ const Header = ({ onDownload }) => {
         >
           <span className="inline-block h-2 w-2 rounded-full bg-accent timeline-dot" />
           <span className="font-heading font-semibold tracking-tight text-base">
-            alex<span className="text-muted-foreground">.mercer</span>
+            dipanshu<span className="text-muted-foreground">.rana</span>
           </span>
         </a>
 

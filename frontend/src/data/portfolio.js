@@ -1,7 +1,7 @@
 // Sample placeholder content — user will replace with real info later
 export const profile = {
-  firstName: "Alex",
-  lastName: "Mercer",
+  firstName: "Dipanshu",
+  lastName: "Rana",
   title: "Senior Software Engineer",
   tagline:
     "I design and ship resilient cloud platforms — turning complex systems into calm, reliable products.",
