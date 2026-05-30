@@ -1,0 +1,177 @@
+{
+  "metadata": {
+    "project": "IT Professional Portfolio",
+    "theme": "Dual Mode (Dark & Light)",
+    "archetype": "Archetype 4: Swiss & High-Contrast (adapted for tech elegance)",
+    "description": "Minimal, elegant, and subtle futuristic CV/resume website for a Senior Software Engineer."
+  },
+  "design_principles": {
+    "spacing": "Generous Spacing Philosophy. Use p-8 to p-24 heavily. Containers with borders must have internal padding.",
+    "alignment": "Optical alignment over geometrical. Heavy use of asymmetrical grids (The Bento Protocol).",
+    "motion": "Subtle micro-interactions, lenis smooth scrolling, staggered entrance animations. No distracting heavy effects.",
+    "accessibility": "High contrast ratios, reduced motion support, semantic HTML, data-testid on all interactive elements."
+  },
+  "typography": {
+    "rules": "Never use Inter for headings. Keep hierarchy strict. Do not center by default.",
+    "fonts": {
+      "heading": {
+        "family": "Outfit",
+        "weights": ["300", "500", "700"],
+        "usage": "H1, H2, H3. Tight letter spacing (tracking-tight)."
+      },
+      "body": {
+        "family": "Manrope",
+        "weights": ["400", "500"],
+        "usage": "Paragraphs, long form text. Loose line height (leading-relaxed)."
+      },
+      "accent": {
+        "family": "JetBrains Mono",
+        "weights": ["400"],
+        "usage": "Overlines, tech skills, small metrics. Uppercase, wide spacing (tracking-[0.2em])."
+      }
+    },
+    "scale": {
+      "h1": "text-4xl sm:text-5xl lg:text-6xl tracking-tight leading-none",
+      "h2": "text-2xl sm:text-3xl lg:text-4xl tracking-tight",
+      "h3": "text-xl sm:text-2xl",
+      "body": "text-base leading-relaxed",
+      "small": "text-sm text-muted-foreground"
+    }
+  },
+  "color_palette": {
+    "global_rules": "No generic gradients. Tinted greys only. High contrast for readability.",
+    "light_mode": {
+      "background": "#FAFAFA",
+      "surface": "#FFFFFF",
+      "border": "#E4E4E7",
+      "text_primary": "#09090B",
+      "text_secondary": "#52525B",
+      "accent": "#2563EB",
+      "accent_hover": "#1D4ED8",
+      "glass": "bg-white/70 backdrop-blur-xl border-white/40 shadow-sm"
+    },
+    "dark_mode": {
+      "background": "#09090B",
+      "surface": "#121214",
+      "border": "#27272A",
+      "text_primary": "#FAFAFA",
+      "text_secondary": "#A1A1AA",
+      "accent": "#3B82F6",
+      "accent_hover": "#60A5FA",
+      "glass": "bg-black/60 backdrop-blur-xl border-white/10 shadow-sm"
+    }
+  },
+  "layout_strategies": {
+    "global_grid": "Mobile-first approach. grid-cols-1 md:grid-cols-12. Generous gap-8 to gap-12.",
+    "bento_grid": "MODE A: The Tetris Grid for Projects. Mix of col-span-4, col-span-8 to create asymmetry.",
+    "surfaces": "Use Grid Borders (exposing the skeleton) for the Experience and Skills sections to enhance the technical IT aesthetic."
+  },
+  "components_and_sections": [
+    {
+      "name": "Header & Navigation",
+      "style": "Crystal Glassmorphism",
+      "classes": "fixed top-0 w-full z-50 transition-all duration-300",
+      "elements": [
+        "Logo/Name (font-heading font-bold)",
+        "Nav Links (hidden on mobile, visible on desktop)",
+        "Dark/Light Mode Toggle (data-testid='theme-toggle')",
+        "Resume Download Button (data-testid='header-download-btn')"
+      ]
+    },
+    {
+      "name": "Hero Section",
+      "layout": "Grid-based asymmetrical. 80vh minimum height.",
+      "background": "Uses the subtle futuristic AI-generated backgrounds (light/dark adaptive), absolutely positioned with opacity to allow text readability.",
+      "content": "Large H1 greeting, dynamic title ('Senior Software Engineer'), short impactful bio. Two buttons: 'View Work' and 'Download CV' (data-testid='hero-download-cv-btn').",
+      "imagery": "Floating profile portrait with a very soft ambient shadow and a 1px inner border. Image max-h-[80vh] md:max-h-none."
+    },
+    {
+      "name": "Experience Timeline",
+      "layout": "Vertical line with nodes. Grid borders aesthetic.",
+      "style": "Minimalist. Overlines in JetBrains Mono for dates.",
+      "interactions": "Hovering over a role subtly illuminates the timeline node (accent color glow)."
+    },
+    {
+      "name": "Skills Array",
+      "layout": "Dense bento grid or flex wrap. Categorized (Frontend, Backend, Cloud).",
+      "style": "Technical look. 1px solid border, flat surface. JetBrains Mono for the skill names. Use lucide-react icons for each category."
+    },
+    {
+      "name": "Projects Showcase",
+      "layout": "Bento Grid (MODE A: Tetris). Asymmetrical.",
+      "cards": "Image heavy, cardless or extremely subtle 1px border. Hovering scales the image slightly inside an overflow-hidden container.",
+      "content": "Project Title, Tech Stack (Mono font), link to view (data-testid='project-link')."
+    },
+    {
+      "name": "Certifications & Education",
+      "layout": "List format with right-aligned dates. Clean tabular data approach to emphasize 'Swiss' aesthetic."
+    },
+    {
+      "name": "Testimonials",
+      "layout": "Horizontal scroll or simple minimal carousel.",
+      "style": "Large quote marks, highly readable typography. Profile picture of the recommender, name, and role."
+    },
+    {
+      "name": "Blog / Insights",
+      "layout": "Simple list of articles with date, read time, and title. Extremely minimal, text-focused."
+    },
+    {
+      "name": "Contact Section & Footer",
+      "layout": "Massive spacing (py-32). Two columns: Left is large text 'Let's Build Something', Right is the Contact Form.",
+      "form": "Shadcn highly customized. 1px bottom borders for inputs (linear/aceternity look), no heavy backgrounds. data-testid on inputs and submit button.",
+      "footer": "Grid borders. Links to socials. Minimal copyright."
+    }
+  ],
+  "media_assets": {
+    "backgrounds": {
+      "dark_mode": {
+        "url": "https://static.prod-images.emergentagent.com/jobs/b9614e72-a83b-4161-b81b-334a509463d6/images/ee47fbf3a5616570725dba4933e0ce884e5b1e912d5be4876ff5b3c15cb23c0f.png",
+        "description": "Subtle futuristic dark background, minimal geometric grid lines, soft ambient glow, deep obsidian."
+      },
+      "light_mode": {
+        "url": "https://static.prod-images.emergentagent.com/jobs/b9614e72-a83b-4161-b81b-334a509463d6/images/158585f11aa65748cab7d994081b5723d1691e8c670eb164f2d39baca5aa23b7.png",
+        "description": "Subtle futuristic light background, minimal silver geometric grid lines, soft ambient glow."
+      }
+    },
+    "portrait": {
+      "url": "https://images.unsplash.com/photo-1655249493799-9cee4fe983bb?crop=entropy&cs=srgb&fm=jpg&ixid=M3w3NDk1Nzh8MHwxfHNlYXJjaHwxfHxwcm9mZXNzaW9uYWwlMjBwb3J0cmFpdCUyMG1pbmltYWxpc3QlMjBiYWNrZ3JvdW5kfGVufDB8fHx8MTc4MDE2NjAwNXww&ixlib=rb-4.1.0&q=85",
+      "description": "Professional tech portrait of a person with a grey sweater, clean background."
+    },
+    "project_placeholders": [
+      {
+        "url": "https://images.unsplash.com/photo-1776702701448-36220108225d?crop=entropy&cs=srgb&fm=jpg&ixid=M3w3NTY2NzR8MHwxfHNlYXJjaHwyfHxtaW5pbWFsaXN0JTIwYXBwJTIwaW50ZXJmYWNlfGVufDB8fHx8MTc4MDE2NjAwNXww&ixlib=rb-4.1.0&q=85",
+        "description": "Smartphone screen interface."
+      },
+      {
+        "url": "https://images.pexels.com/photos/10054188/pexels-photo-10054188.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940",
+        "description": "Modern app display with clean aesthetic."
+      },
+      {
+        "url": "https://images.unsplash.com/photo-1778585037417-c7ba22d42160?crop=entropy&cs=srgb&fm=jpg&ixid=M3w3NTY2NzR8MHwxfHNlYXJjaHwzfHxtaW5pbWFsaXN0JTIwYXBwJTIwaW50ZXJmYWNlfGVufDB8fHx8MTc4MDE2NjAwNXww&ixlib=rb-4.1.0&q=85",
+        "description": "App options on dark background."
+      }
+    ]
+  },
+  "interactive_elements_and_testing": {
+    "guidelines": "Every button, link, and form element must have a data-testid for end-to-end testing.",
+    "required_test_ids": [
+      "theme-toggle",
+      "header-download-btn",
+      "hero-download-cv-btn",
+      "nav-about-link",
+      "nav-experience-link",
+      "nav-projects-link",
+      "nav-contact-link",
+      "contact-name-input",
+      "contact-email-input",
+      "contact-message-input",
+      "contact-submit-button"
+    ]
+  },
+  "library_recommendations": {
+    "icons": "lucide-react (default for clean interfaces)",
+    "motion": "framer-motion for page transitions and micro-interactions",
+    "scrolling": "@studio-freight/lenis for smooth momentum scrolling",
+    "ui_components": "shadcn/ui (heavily customized, stripping out default Vercel aesthetic)"
+  }
+}
