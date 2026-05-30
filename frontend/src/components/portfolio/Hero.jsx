@@ -89,8 +89,22 @@ const Hero = ({ onDownload }) => {
           initial={{ opacity: 0, y: 24 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.4, duration: 0.7 }}
-          className="lg:col-span-4 w-full"
+          className="lg:col-span-4 w-full flex flex-col gap-5"
         >
+          <div className="relative grid-border rounded-md overflow-hidden bg-card/40 backdrop-blur-md">
+            <div className="aspect-[4/5] overflow-hidden">
+              <img
+                src={profile.portrait}
+                alt={`${profile.firstName} ${profile.lastName}`}
+                className="h-full w-full object-cover grayscale-[15%] hover:grayscale-0 transition-all duration-[1200ms]"
+                data-testid="hero-portrait"
+              />
+            </div>
+            <div className="absolute left-3 top-3 px-2.5 py-1 rounded-full bg-background/70 backdrop-blur-md border border-border">
+              <span className="font-mono-accent text-muted-foreground">· ON FILM</span>
+            </div>
+          </div>
+
           <div className="grid-border rounded-md bg-card/40 backdrop-blur-md p-5">
             <div className="font-mono-accent text-muted-foreground mb-4">
               · CURRENT ROLE

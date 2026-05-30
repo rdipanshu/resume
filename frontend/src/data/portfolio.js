@@ -15,7 +15,7 @@ export const profile = {
     { label: "X / Twitter", href: "https://x.com" },
   ],
   portrait:
-    "https://images.unsplash.com/photo-1655249493799-9cee4fe983bb?crop=entropy&cs=srgb&fm=jpg&q=85&w=900",
+    "https://customer-assets.emergentagent.com/job_resume-showcase-504/artifacts/moxzv9k5_hICyxQr75SmELvQ7kUIjVkkNKPPULmp6bbJtOeFg.jpg",
 };
 
 export const about = {

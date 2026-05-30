@@ -19,14 +19,21 @@ const PrintableCV = () => {
     >
       <div style={{ fontFamily: "Manrope, Arial, sans-serif", color: "#09090b" }}>
         {/* Header */}
-        <div style={{ borderBottom: "2px solid #09090b", paddingBottom: 12, marginBottom: 20 }}>
-          <h1 style={{ fontSize: 30, margin: 0, fontFamily: "Outfit, Arial, sans-serif", fontWeight: 600 }}>
-            {profile.firstName} {profile.lastName}
-          </h1>
-          <div style={{ fontSize: 14, marginTop: 4, color: "#52525B" }}>{profile.title}</div>
-          <div style={{ fontSize: 11, marginTop: 8, color: "#52525B" }}>
-            {profile.email} · {profile.phone} · {profile.location}
+        <div style={{ borderBottom: "2px solid #09090b", paddingBottom: 12, marginBottom: 20, display: "flex", justifyContent: "space-between", alignItems: "flex-start", gap: 16 }}>
+          <div>
+            <h1 style={{ fontSize: 30, margin: 0, fontFamily: "Outfit, Arial, sans-serif", fontWeight: 600 }}>
+              {profile.firstName} {profile.lastName}
+            </h1>
+            <div style={{ fontSize: 14, marginTop: 4, color: "#52525B" }}>{profile.title}</div>
+            <div style={{ fontSize: 11, marginTop: 8, color: "#52525B" }}>
+              {profile.email} · {profile.phone} · {profile.location}
+            </div>
           </div>
+          <img
+            src={profile.portrait}
+            alt=""
+            style={{ width: 84, height: 84, objectFit: "cover", borderRadius: 4, border: "1px solid #09090b", filter: "grayscale(100%)" }}
+          />
         </div>
 
         {/* About */}
