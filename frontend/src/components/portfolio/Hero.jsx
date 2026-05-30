@@ -7,7 +7,8 @@ import FuturisticBg from "./FuturisticBg";
 
 const Hero = ({ onDownload }) => {
   return (
-    <section id="top" className="relative min-h-[100svh] flex items-end pb-20 pt-32 overflow-hidden">
+    <section id="hero" className="relative min-h-[100svh] flex items-end pb-20 pt-32 overflow-hidden">
+      <span id="top" className="absolute top-0" aria-hidden="true" />
       <FuturisticBg />
 
       <div className="relative mx-auto max-w-7xl w-full px-6 lg:px-10 grid grid-cols-1 lg:grid-cols-12 gap-10 items-end">
