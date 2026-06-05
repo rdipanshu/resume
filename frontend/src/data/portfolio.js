@@ -117,8 +117,6 @@ export const activities = [
   "Gamer",
   "Photography",
   "Long-drive enthusiast",
-  "Mechanical keyboards",
-  "Open-source tinkering",
   "Cricket",
   "Hiking the Uttarakhand hills",
   "Specialty coffee",
