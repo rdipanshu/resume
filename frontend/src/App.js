@@ -9,17 +9,13 @@ import Hero from "./components/portfolio/Hero";
 import About from "./components/portfolio/About";
 import Experience from "./components/portfolio/Experience";
 import Skills from "./components/portfolio/Skills";
-import Projects from "./components/portfolio/Projects";
-import EducationCerts from "./components/portfolio/EducationCerts";
-import Testimonials from "./components/portfolio/Testimonials";
-import Blog from "./components/portfolio/Blog";
+import Education from "./components/portfolio/Education";
 import Contact from "./components/portfolio/Contact";
 import Footer from "./components/portfolio/Footer";
 import PrintableCV from "./components/portfolio/PrintableCV";
 
 const HomePage = () => {
   const handleDownload = useCallback(() => {
-    // Trigger browser print dialog — user can save the printable CV as a PDF.
     window.print();
   }, []);
 
@@ -31,10 +27,7 @@ const HomePage = () => {
         <About />
         <Experience />
         <Skills />
-        <Projects />
-        <EducationCerts />
-        <Testimonials />
-        <Blog />
+        <Education />
         <Contact />
       </main>
       <Footer />

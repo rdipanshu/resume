@@ -6,9 +6,8 @@ import { Button } from "../ui/button";
 const links = [
   { id: "about", label: "About", testId: "nav-about-link" },
   { id: "experience", label: "Experience", testId: "nav-experience-link" },
-  { id: "projects", label: "Projects", testId: "nav-projects-link" },
   { id: "skills", label: "Skills", testId: "nav-skills-link" },
-  { id: "blog", label: "Writing", testId: "nav-blog-link" },
+  { id: "education", label: "Education", testId: "nav-education-link" },
   { id: "contact", label: "Contact", testId: "nav-contact-link" },
 ];
 

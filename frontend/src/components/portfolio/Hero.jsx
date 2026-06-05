@@ -68,8 +68,8 @@ const Hero = ({ onDownload }) => {
               className="rounded-full h-11 px-6"
               data-testid="hero-view-work-btn"
             >
-              <a href="#projects">
-                View selected work
+              <a href="#experience">
+                View experience
                 <ArrowDown className="h-4 w-4 ml-2" />
               </a>
             </Button>
@@ -119,9 +119,9 @@ const Hero = ({ onDownload }) => {
 
             <div className="mt-6 border-t border-border pt-4 grid grid-cols-3 gap-3">
               {[
-                { k: "yrs", v: "8+" },
-                { k: "projects", v: "40+" },
-                { k: "clients", v: "20+" },
+                { k: "since", v: "2024" },
+                { k: "companies", v: "3" },
+                { k: "based in", v: "IN" },
               ].map((s) => (
                 <div key={s.k}>
                   <div className="font-heading text-xl tracking-tight">{s.v}</div>

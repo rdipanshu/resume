@@ -40,7 +40,7 @@ const Contact = () => {
     <section id="contact" className="relative py-28 lg:py-40 border-t border-border">
       <div className="mx-auto max-w-7xl px-6 lg:px-10 grid grid-cols-1 lg:grid-cols-12 gap-12">
         <div className="lg:col-span-6">
-          <div className="font-mono-accent text-muted-foreground mb-4">· 09 / CONTACT</div>
+          <div className="font-mono-accent text-muted-foreground mb-4">· 05 / CONTACT</div>
           <h2 className="font-heading text-4xl sm:text-5xl lg:text-6xl tracking-tight leading-[1.05]">
             Let's build <br />
             <span className="text-muted-foreground">something useful.</span>
