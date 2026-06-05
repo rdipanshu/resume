@@ -7,11 +7,14 @@ export const profile = {
     "Operations Manager pairing field-tested logistics know-how with a developer's eye — cutting costs, streamlining workflows, and shipping work that actually lands.",
   location: "Rudrapur, India · 263153",
   email: "rdipanshu@gmail.com",
-  phone: "+91 93894 00735",
+  phone: "+91-9897979338",
   availability: "Open to leadership & consulting opportunities",
   socials: [
-    { label: "Email", href: "mailto:rdipanshu@gmail.com" },
-    { label: "Call", href: "tel:+919389400735" },
+    { label: "GitHub", icon: "github", href: "https://github.com/rdipanshu" },
+    { label: "Instagram", icon: "instagram", href: "https://www.instagram.com/rdipanshu08" },
+    { label: "Facebook", icon: "facebook", href: "https://www.facebook.com/rdipanshu08/" },
+    { label: "X / Twitter", icon: "twitter", href: "https://x.com/dipirana" },
+    { label: "Email", icon: "mail", href: "mailto:rdipanshu@gmail.com" },
   ],
   portrait:
     "https://customer-assets.emergentagent.com/job_resume-showcase-504/artifacts/moxzv9k5_hICyxQr75SmELvQ7kUIjVkkNKPPULmp6bbJtOeFg.jpg",
@@ -108,12 +111,37 @@ export const skills = [
   },
 ];
 
-// Activities & honors from the CV
-export const activities = ["Traveler", "Gamer"];
+// Activities & honors from the CV, expanded with hobbies
+export const activities = [
+  "Traveler",
+  "Gamer",
+  "Photography",
+  "Long-drive enthusiast",
+  "Mechanical keyboards",
+  "Open-source tinkering",
+  "Cricket",
+  "Hiking the Uttarakhand hills",
+  "Specialty coffee",
+];
 
 // Sections below are intentionally empty — not present in the source CV.
 // Re-enable in App.js when data is provided.
 export const projects = [];
 export const certifications = [];
-export const testimonials = [];
+
+export const testimonials = [
+  {
+    quote:
+      "Dipanshu is one of the sharpest minds I've worked with — calm under pressure, technically rigorous, and the kind of person who quietly makes the whole team better. He ships work you can trust.",
+    name: "Mr. Shivendra Kaura",
+    role: "IT Head, DS Group",
+  },
+  {
+    quote:
+      "I've known Dipanshu both professionally and personally. He approaches every problem with patience and clarity, and his work ethic is genuinely rare. A reliable, grounded, and deeply thoughtful person.",
+    name: "Dr. Udit Bhutani",
+    role: "Junior Resident, JLN Government Hospital, Rudrapur",
+  },
+];
+
 export const blog = [];

@@ -8,6 +8,7 @@ const links = [
   { id: "experience", label: "Experience", testId: "nav-experience-link" },
   { id: "skills", label: "Skills", testId: "nav-skills-link" },
   { id: "education", label: "Education", testId: "nav-education-link" },
+  { id: "testimonials", label: "Words", testId: "nav-testimonials-link" },
   { id: "contact", label: "Contact", testId: "nav-contact-link" },
 ];
 

@@ -1,6 +1,6 @@
 import React from "react";
 import { motion } from "framer-motion";
-import { about, profile } from "../../data/portfolio";
+import { about, profile, activities } from "../../data/portfolio";
 
 const Section = ({ id, children, className = "" }) => (
   <section id={id} className={`relative py-24 lg:py-32 ${className}`}>
@@ -47,6 +47,23 @@ const About = () => {
             <span>·</span>
             <span>{profile.location}</span>
           </div>
+
+          {activities && activities.length > 0 && (
+            <div className="mt-12 border-t border-border pt-8">
+              <div className="font-mono-accent text-muted-foreground mb-4">· OFF THE CLOCK</div>
+              <ul className="flex flex-wrap gap-2">
+                {activities.map((a) => (
+                  <li
+                    key={a}
+                    className="text-sm px-3 py-1.5 rounded-full border border-border bg-card hover:border-accent hover:text-foreground transition-colors"
+                    data-testid={`hobby-${a.toLowerCase().replace(/\W+/g, "-")}`}
+                  >
+                    {a}
+                  </li>
+                ))}
+              </ul>
+            </div>
+          )}
         </div>
       </div>
     </Section>

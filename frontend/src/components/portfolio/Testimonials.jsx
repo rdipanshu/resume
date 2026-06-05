@@ -15,7 +15,7 @@ const Testimonials = () => {
       <div className="mx-auto max-w-7xl px-6 lg:px-10">
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 mb-10">
           <div className="lg:col-span-4">
-            <div className="font-mono-accent text-muted-foreground mb-4">· 07 / TESTIMONIALS</div>
+            <div className="font-mono-accent text-muted-foreground mb-4">· 05 / WORDS</div>
             <h2 className="font-heading text-3xl lg:text-4xl tracking-tight">
               Words from teammates.
             </h2>

@@ -10,6 +10,7 @@ import About from "./components/portfolio/About";
 import Experience from "./components/portfolio/Experience";
 import Skills from "./components/portfolio/Skills";
 import Education from "./components/portfolio/Education";
+import Testimonials from "./components/portfolio/Testimonials";
 import Contact from "./components/portfolio/Contact";
 import Footer from "./components/portfolio/Footer";
 import PrintableCV from "./components/portfolio/PrintableCV";
@@ -28,6 +29,7 @@ const HomePage = () => {
         <Experience />
         <Skills />
         <Education />
+        <Testimonials />
         <Contact />
       </main>
       <Footer />
