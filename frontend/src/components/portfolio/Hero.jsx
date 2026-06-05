@@ -1,11 +1,11 @@
 import React from "react";
 import { motion } from "framer-motion";
-import { ArrowDown, Download, MapPin } from "lucide-react";
+import { ArrowDown, MapPin } from "lucide-react";
 import { Button } from "../ui/button";
 import { profile } from "../../data/portfolio";
 import FuturisticBg from "./FuturisticBg";
 
-const Hero = ({ onDownload }) => {
+const Hero = () => {
   return (
     <section id="hero" className="relative min-h-[100svh] flex items-end pb-20 pt-32 overflow-hidden">
       <span id="top" className="absolute top-0" aria-hidden="true" />
@@ -72,15 +72,6 @@ const Hero = ({ onDownload }) => {
                 View experience
                 <ArrowDown className="h-4 w-4 ml-2" />
               </a>
-            </Button>
-            <Button
-              variant="outline"
-              onClick={onDownload}
-              className="rounded-full h-11 px-6 border-border"
-              data-testid="hero-download-cv-btn"
-            >
-              <Download className="h-4 w-4 mr-2" />
-              Download CV
             </Button>
           </motion.div>
         </div>

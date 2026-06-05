@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from "react";
-import { Moon, Sun, Download, Menu, X } from "lucide-react";
+import { Moon, Sun, Menu, X } from "lucide-react";
 import { useTheme } from "./ThemeProvider";
-import { Button } from "../ui/button";
 
 const links = [
   { id: "about", label: "About", testId: "nav-about-link" },
@@ -12,7 +11,7 @@ const links = [
   { id: "contact", label: "Contact", testId: "nav-contact-link" },
 ];
 
-const Header = ({ onDownload }) => {
+const Header = () => {
   const { theme, toggle } = useTheme();
   const [scrolled, setScrolled] = useState(false);
   const [open, setOpen] = useState(false);
@@ -68,15 +67,6 @@ const Header = ({ onDownload }) => {
             {theme === "dark" ? <Sun className="h-4 w-4" /> : <Moon className="h-4 w-4" />}
           </button>
 
-          <Button
-            onClick={onDownload}
-            data-testid="header-download-btn"
-            className="hidden sm:inline-flex h-9 rounded-full px-4 text-xs font-mono-accent"
-          >
-            <Download className="h-3.5 w-3.5 mr-2" />
-            Download CV
-          </Button>
-
           <button
             className="md:hidden h-9 w-9 inline-flex items-center justify-center rounded-full border border-border"
             onClick={() => setOpen((s) => !s)}
@@ -101,14 +91,6 @@ const Header = ({ onDownload }) => {
                 {l.label}
               </a>
             ))}
-            <Button
-              onClick={onDownload}
-              className="mt-2 rounded-full"
-              data-testid="mobile-download-btn"
-            >
-              <Download className="h-3.5 w-3.5 mr-2" />
-              Download CV
-            </Button>
           </div>
         </div>
       )}

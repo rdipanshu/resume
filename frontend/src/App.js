@@ -1,4 +1,4 @@
-import React, { useCallback } from "react";
+import React from "react";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import { Toaster } from "./components/ui/sonner";
 import "./App.css";
@@ -13,18 +13,13 @@ import Education from "./components/portfolio/Education";
 import Testimonials from "./components/portfolio/Testimonials";
 import Contact from "./components/portfolio/Contact";
 import Footer from "./components/portfolio/Footer";
-import PrintableCV from "./components/portfolio/PrintableCV";
 
 const HomePage = () => {
-  const handleDownload = useCallback(() => {
-    window.print();
-  }, []);
-
   return (
     <div className="App relative">
-      <Header onDownload={handleDownload} />
+      <Header />
       <main>
-        <Hero onDownload={handleDownload} />
+        <Hero />
         <About />
         <Experience />
         <Skills />
@@ -33,7 +28,6 @@ const HomePage = () => {
         <Contact />
       </main>
       <Footer />
-      <PrintableCV />
     </div>
   );
 };
