@@ -8,7 +8,7 @@ import { Textarea } from "../ui/textarea";
 import { Button } from "../ui/button";
 import { profile } from "../../data/portfolio";
 
-const API = `${process.env.REACT_APP_BACKEND_URL}/api`;
+const API = `${process.env.REACT_APP_BACKEND_URL || ""}/api`;
 
 const Contact = () => {
   const [form, setForm] = useState({ name: "", email: "", subject: "", message: "" });

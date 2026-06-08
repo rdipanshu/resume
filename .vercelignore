@@ -1,0 +1,21 @@
+# Backend (Emergent only) — Vercel uses /api/index.py instead
+backend/
+
+# Local & build artefacts
+node_modules
+frontend/node_modules
+frontend/build
+.venv
+__pycache__
+*.pyc
+
+# Editor / OS
+.DS_Store
+.idea
+.vscode
+
+# Test reports / memory / screenshots
+test_reports/
+memory/
+screenshots/
+tests/
