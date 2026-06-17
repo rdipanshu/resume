@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { Moon, Sun, Menu, X } from "lucide-react";
+import { Moon, Sun, Menu, X, Download } from "lucide-react";
 import { useTheme } from "./ThemeProvider";
 
 const links = [
@@ -67,6 +67,16 @@ const Header = () => {
             {theme === "dark" ? <Sun className="h-4 w-4" /> : <Moon className="h-4 w-4" />}
           </button>
 
+          <a
+            href="/dipanshu-rana-cv.pdf"
+            download="Dipanshu-Rana-CV.pdf"
+            data-testid="header-download-cv-btn"
+            className="hidden sm:inline-flex items-center h-9 rounded-full px-4 text-xs font-mono-accent bg-foreground text-background hover:bg-foreground/90 transition-colors"
+          >
+            <Download className="h-3.5 w-3.5 mr-2" />
+            Download CV
+          </a>
+
           <button
             className="md:hidden h-9 w-9 inline-flex items-center justify-center rounded-full border border-border"
             onClick={() => setOpen((s) => !s)}
@@ -91,6 +101,16 @@ const Header = () => {
                 {l.label}
               </a>
             ))}
+            <a
+              href="/dipanshu-rana-cv.pdf"
+              download="Dipanshu-Rana-CV.pdf"
+              onClick={() => setOpen(false)}
+              data-testid="mobile-download-cv-btn"
+              className="mt-2 inline-flex items-center justify-center h-10 rounded-full px-4 text-xs font-mono-accent bg-foreground text-background"
+            >
+              <Download className="h-3.5 w-3.5 mr-2" />
+              Download CV
+            </a>
           </div>
         </div>
       )}
