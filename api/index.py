@@ -1,10 +1,14 @@
 # Vercel serverless entry point — exposes the FastAPI `app` instance.
-# Vercel's @vercel/python runtime detects ASGI apps automatically.
+# Uses the new Vercel Services model: see /vercel.json.
 #
-# Required env vars (set in Vercel dashboard):
-#   MONGO_URL    — MongoDB Atlas connection string (e.g. mongodb+srv://...)
+# Required env vars (Vercel Project → Settings → Environment Variables):
+#   MONGO_URL    — MongoDB Atlas connection string (mongodb+srv://...)
 #   DB_NAME      — database name (e.g. portfolio)
-#   CORS_ORIGINS — comma-separated list, or "*"
+#   CORS_ORIGINS — comma-separated origins, or "*"
+#
+# Note: with `routePrefix: "/api"` in vercel.json, Vercel forwards requests
+# to this function with the prefix stripped. So we register routes at root
+# (e.g. "/contact") AND duplicate at "/api/contact" for safety.
 
 import os
 import uuid
@@ -15,10 +19,9 @@ from starlette.middleware.cors import CORSMiddleware
 from motor.motor_asyncio import AsyncIOMotorClient
 from pydantic import BaseModel, ConfigDict, EmailStr, Field
 
-# ---------- App ----------
 app = FastAPI(title="Portfolio API (Vercel)")
 
-# ---------- Mongo (lazy, connection reused across warm invocations) ----------
+# ---------- Mongo (lazy, reused across warm invocations) ----------
 _client: AsyncIOMotorClient | None = None
 
 
@@ -49,7 +52,9 @@ class ContactMessage(BaseModel):
     email: EmailStr
     subject: str | None = None
     message: str
-    created_at: str = Field(default_factory=lambda: datetime.now(timezone.utc).isoformat())
+    created_at: str = Field(
+        default_factory=lambda: datetime.now(timezone.utc).isoformat()
+    )
 
 
 # ---------- Middleware ----------
@@ -62,15 +67,12 @@ app.add_middleware(
 )
 
 
-# ---------- Routes ----------
-@app.get("/api/")
-@app.get("/api")
-async def root():
+# ---------- Route handlers (registered at both root and /api/* for safety) ----------
+async def _root():
     return {"message": "Portfolio API up (Vercel)"}
 
 
-@app.post("/api/contact", response_model=ContactMessage, status_code=201)
-async def create_contact_message(payload: ContactMessageCreate):
+async def _create_contact_message(payload: ContactMessageCreate):
     try:
         msg = ContactMessage(**payload.model_dump())
         db = _get_db()
@@ -82,8 +84,19 @@ async def create_contact_message(payload: ContactMessageCreate):
         raise HTTPException(status_code=500, detail="Could not save your message")
 
 
-@app.get("/api/contact")
-async def list_contact_messages():
+async def _list_contact_messages():
     db = _get_db()
     docs = await db.contact_messages.find({}, {"_id": 0}).sort("created_at", -1).to_list(500)
     return docs
+
+
+# Root-relative (when Vercel strips the /api prefix)
+app.add_api_route("/", _root, methods=["GET"])
+app.add_api_route("/contact", _create_contact_message, methods=["POST"], status_code=201, response_model=ContactMessage)
+app.add_api_route("/contact", _list_contact_messages, methods=["GET"])
+
+# Also register at /api/* in case the prefix is NOT stripped
+app.add_api_route("/api", _root, methods=["GET"])
+app.add_api_route("/api/", _root, methods=["GET"])
+app.add_api_route("/api/contact", _create_contact_message, methods=["POST"], status_code=201, response_model=ContactMessage)
+app.add_api_route("/api/contact", _list_contact_messages, methods=["GET"])
