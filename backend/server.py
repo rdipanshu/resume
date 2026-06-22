@@ -3,7 +3,9 @@ from dotenv import load_dotenv
 from starlette.middleware.cors import CORSMiddleware
 from motor.motor_asyncio import AsyncIOMotorClient
 import os
+import asyncio
 import logging
+import resend
 from pathlib import Path
 from pydantic import BaseModel, Field, ConfigDict, EmailStr
 from typing import List
@@ -18,6 +20,11 @@ load_dotenv(ROOT_DIR / '.env')
 mongo_url = os.environ['MONGO_URL']
 client = AsyncIOMotorClient(mongo_url)
 db = client[os.environ['DB_NAME']]
+
+# Email (Resend) configuration
+resend.api_key = os.environ.get('RESEND_API_KEY')
+SENDER_EMAIL = os.environ.get('SENDER_EMAIL', 'onboarding@resend.dev')
+NOTIFY_EMAIL = os.environ.get('NOTIFY_EMAIL', 'rdipanshu@gmail.com')
 
 app = FastAPI()
 api_router = APIRouter(prefix="/api")
@@ -55,6 +62,44 @@ class ContactMessage(BaseModel):
 
 
 # -----------------------------
+# Email helper
+# -----------------------------
+def _build_contact_email_html(msg: "ContactMessage") -> str:
+    subject = msg.subject or "(no subject)"
+    return f"""
+    <div style="font-family: Arial, Helvetica, sans-serif; color:#111; line-height:1.6;">
+      <h2 style="margin:0 0 16px;">New contact form submission</h2>
+      <table style="border-collapse:collapse; width:100%; max-width:600px;">
+        <tr><td style="padding:6px 0; font-weight:bold; width:120px;">Name</td><td style="padding:6px 0;">{msg.name}</td></tr>
+        <tr><td style="padding:6px 0; font-weight:bold;">Email</td><td style="padding:6px 0;">{msg.email}</td></tr>
+        <tr><td style="padding:6px 0; font-weight:bold;">Subject</td><td style="padding:6px 0;">{subject}</td></tr>
+        <tr><td style="padding:6px 0; font-weight:bold; vertical-align:top;">Message</td><td style="padding:6px 0; white-space:pre-wrap;">{msg.message}</td></tr>
+        <tr><td style="padding:6px 0; font-weight:bold;">Received</td><td style="padding:6px 0;">{msg.created_at}</td></tr>
+      </table>
+    </div>
+    """
+
+
+async def send_contact_notification(msg: "ContactMessage") -> None:
+    """Send an email notification for a new contact submission. Non-blocking, errors are logged not raised."""
+    if not resend.api_key:
+        logger.warning("RESEND_API_KEY not set; skipping email notification")
+        return
+    params = {
+        "from": SENDER_EMAIL,
+        "to": [NOTIFY_EMAIL],
+        "reply_to": msg.email,
+        "subject": f"New portfolio message from {msg.name}",
+        "html": _build_contact_email_html(msg),
+    }
+    try:
+        result = await asyncio.to_thread(resend.Emails.send, params)
+        logger.info("Contact notification email sent: %s", result.get("id") if isinstance(result, dict) else result)
+    except Exception:
+        logger.exception("Failed to send contact notification email")
+
+
+# -----------------------------
 # Routes
 # -----------------------------
 @api_router.get("/")
@@ -85,7 +130,10 @@ async def create_contact_message(payload: ContactMessageCreate):
     try:
         msg = ContactMessage(**payload.model_dump())
         await db.contact_messages.insert_one(msg.model_dump())
+        await send_contact_notification(msg)
         return msg
+    except HTTPException:
+        raise
     except Exception as e:
         logger.exception("Failed to save contact message")
         raise HTTPException(status_code=500, detail="Could not save your message") from e
