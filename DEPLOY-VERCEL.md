@@ -7,7 +7,7 @@ The repo ships a `vercel.json` that declares **two builds**:
 Routes in `vercel.json` map `/api/*` to the Python function and everything else
 to the React build (with an SPA fallback to `index.html`).
 
-Emergent deployment (`/backend/server.py`) is untouched and still works.
+The original production deployment (`/backend/server.py`) is untouched and still works.
 
 ---
 

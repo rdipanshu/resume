@@ -1,6 +1,6 @@
 # Dipanshu Rana — CV / Resume Website · Screenshots
 
-Captured on the live preview at: https://resume-showcase-504.preview.emergentagent.com
+Captured on the live preview at: https://dipanshu.co.in
 Viewport: 1440 × 900
 
 ---
