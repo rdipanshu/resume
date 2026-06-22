@@ -1,25 +1,14 @@
 {
-  "version": 2,
-  "builds": [
-    {
-      "src": "frontend/package.json",
-      "use": "@vercel/static-build",
-      "config": { "distDir": "build" }
+  "experimentalServices": {
+    "web": {
+      "entrypoint": "frontend",
+      "routePrefix": "/",
+      "framework": "create-react-app"
     },
-    {
-      "src": "api/index.py",
-      "use": "@vercel/python"
+    "api": {
+      "entrypoint": "api/index.py",
+      "routePrefix": "/api",
+      "framework": "fastapi"
     }
-  ],
-  "routes": [
-    { "src": "/api(/.*)?", "dest": "/api/index.py" },
-    { "src": "/static/(.*)", "dest": "/frontend/static/$1" },
-    { "src": "/dipanshu-rana-cv\\.pdf", "dest": "/frontend/dipanshu-rana-cv.pdf" },
-    { "src": "/favicon\\.ico", "dest": "/frontend/favicon.ico" },
-    { "src": "/manifest\\.json", "dest": "/frontend/manifest.json" },
-    { "src": "/robots\\.txt", "dest": "/frontend/robots.txt" },
-    { "src": "/asset-manifest\\.json", "dest": "/frontend/asset-manifest.json" },
-    { "src": "/(.*\\.(js|css|map|png|jpg|jpeg|svg|webp|gif|ico|json|txt|woff2?|ttf))", "dest": "/frontend/$1" },
-    { "src": "/(.*)", "dest": "/frontend/index.html" }
-  ]
+  }
 }
