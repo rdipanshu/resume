@@ -13,12 +13,14 @@ import Education from "./components/portfolio/Education";
 import Testimonials from "./components/portfolio/Testimonials";
 import Contact from "./components/portfolio/Contact";
 import Footer from "./components/portfolio/Footer";
+import Scene3D from "./components/portfolio/Scene3D";
 
 const HomePage = () => {
   return (
     <div className="App relative">
+      <Scene3D />
       <Header />
-      <main>
+      <main className="relative z-10">
         <Hero />
         <About />
         <Experience />
