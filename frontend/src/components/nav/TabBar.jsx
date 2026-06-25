@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from "react";
-import { useLocation } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import { Menu, X } from "lucide-react";
-import { useTransition } from "../../transition/TransitionProvider";
 
 export const TABS = [
   { to: "/about", n: "01", label: "About" },
@@ -16,7 +15,7 @@ const isActive = (pathname, to) =>
   pathname === to || (to === "/about" && pathname === "/");
 
 const TabBar = () => {
-  const { burnNavigate } = useTransition();
+  const navigate = useNavigate();
   const location = useLocation();
   const [scrolled, setScrolled] = useState(false);
   const [open, setOpen] = useState(false);
@@ -31,7 +30,9 @@ const TabBar = () => {
   const go = (e, to) => {
     e.preventDefault();
     setOpen(false);
-    burnNavigate(to);
+    if (to === location.pathname) return;
+    window.scrollTo(0, 0);
+    navigate(to);
   };
 
   // Words tab is a light/ivory page — use dark nav text for contrast there.
