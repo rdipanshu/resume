@@ -1,8 +1,24 @@
-import React from "react";
+import React, { useEffect, useRef } from "react";
 import { useCanvasAnim } from "../../lib/useCanvasAnim";
 
 // Contacts — "The Digital Radar": pulsing rings, rotating sweep, blips, topo contours.
+// Every scroll-wheel / touch move sends a glowing ripple through the map.
 const ContactBg = () => {
+  const ripples = useRef([]);
+
+  useEffect(() => {
+    const spawn = () => {
+      ripples.current.push({ r: 0, life: 0 });
+      if (ripples.current.length > 14) ripples.current.shift();
+    };
+    window.addEventListener("wheel", spawn, { passive: true });
+    window.addEventListener("touchmove", spawn, { passive: true });
+    return () => {
+      window.removeEventListener("wheel", spawn);
+      window.removeEventListener("touchmove", spawn);
+    };
+  }, []);
+
   const ref = useCanvasAnim(
     (ctx, s) => {
       s.store.blips = Array.from({ length: 7 }, () => ({
@@ -17,7 +33,6 @@ const ContactBg = () => {
       const cy = s.h / 2;
       const R = Math.min(s.w, s.h) * 0.46;
 
-      // concentric pulsing rings
       ctx.strokeStyle = "rgba(45,220,150,0.18)";
       ctx.lineWidth = 1;
       for (let i = 1; i <= 5; i++) {
@@ -26,13 +41,11 @@ const ContactBg = () => {
         ctx.arc(cx, cy, (R / 5) * i * pulse, 0, Math.PI * 2);
         ctx.stroke();
       }
-      // crosshair
       ctx.beginPath();
       ctx.moveTo(cx - R, cy); ctx.lineTo(cx + R, cy);
       ctx.moveTo(cx, cy - R); ctx.lineTo(cx, cy + R);
       ctx.stroke();
 
-      // expanding ping
       const ping = (s.t % 3) / 3;
       ctx.strokeStyle = `rgba(45,220,150,${0.35 * (1 - ping)})`;
       ctx.lineWidth = 2;
@@ -40,7 +53,20 @@ const ContactBg = () => {
       ctx.arc(cx, cy, R * ping, 0, Math.PI * 2);
       ctx.stroke();
 
-      // rotating sweep
+      // scroll-driven ripples
+      for (let i = ripples.current.length - 1; i >= 0; i--) {
+        const rp = ripples.current[i];
+        rp.life += s.dt;
+        rp.r += 340 * s.dt;
+        const k = rp.life / 1.4;
+        if (k >= 1) { ripples.current.splice(i, 1); continue; }
+        ctx.strokeStyle = `rgba(120,255,190,${0.5 * (1 - k)})`;
+        ctx.lineWidth = 2;
+        ctx.beginPath();
+        ctx.arc(cx, cy, rp.r, 0, Math.PI * 2);
+        ctx.stroke();
+      }
+
       const ang = s.t * 1.1;
       const g = ctx.createConicGradient ? ctx.createConicGradient(ang, cx, cy) : null;
       ctx.save();
@@ -63,7 +89,6 @@ const ContactBg = () => {
       }
       ctx.restore();
 
-      // blips that light up when the sweep passes
       const blips = s.store.blips || [];
       const sweepA = ((ang % (Math.PI * 2)) + Math.PI * 2) % (Math.PI * 2);
       for (const b of blips) {

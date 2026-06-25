@@ -1,10 +1,19 @@
 import React from "react";
+import { motion, useScroll, useVelocity, useTransform, useSpring, useMotionTemplate } from "framer-motion";
 
 // Words — "The Editorial Ink": ivory page with oversized faint serif typography as art.
+// Background kinetic typography blurs + stretches on fast scroll.
 const WordsBg = () => {
+  const { scrollY } = useScroll();
+  const velocity = useVelocity(scrollY);
+  const smooth = useSpring(velocity, { stiffness: 200, damping: 40 });
+  const blurPx = useTransform(smooth, [-2500, 0, 2500], [14, 0, 14], { clamp: true });
+  const skew = useTransform(smooth, [-2500, 0, 2500], [-9, 0, 9], { clamp: true });
+  const filter = useMotionTemplate`blur(${blurPx}px)`;
+
   return (
     <div className="tab-bg editorial-base" data-testid="bg-words">
-      <div className="editorial-ghost">
+      <motion.div className="editorial-ghost" style={{ filter, skewY: skew }}>
         <div
           className="absolute whitespace-nowrap"
           style={{ top: "6vh", left: "-4vw", fontSize: "22vw", opacity: 0.05, lineHeight: 0.8 }}
@@ -23,7 +32,7 @@ const WordsBg = () => {
         >
           &ldquo;
         </div>
-      </div>
+      </motion.div>
       <div
         className="absolute inset-0"
         style={{
