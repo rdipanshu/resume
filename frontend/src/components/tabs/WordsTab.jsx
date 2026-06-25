@@ -12,10 +12,10 @@ const WordsTab = () => {
           <div className="section-overline mb-4" style={{ color: "#9a3b2e" }}>· 05 / Words</div>
           <motion.h2
             className="np-serif text-6xl sm:text-7xl font-black tracking-tight leading-[0.95]"
-            initial={{ clipPath: "inset(0 100% 0 0)" }}
-            whileInView={{ clipPath: "inset(0 0% 0 0)" }}
+            initial={{ opacity: 0, x: -40 }}
+            whileInView={{ opacity: 1, x: 0 }}
             viewport={{ once: true, amount: 0.2 }}
-            transition={{ duration: 1, ease: [0.7, 0, 0.3, 1] }}
+            transition={{ duration: 0.8, ease: [0.22, 1, 0.36, 1] }}
           >
             What people<br />say.
           </motion.h2>
@@ -24,13 +24,13 @@ const WordsTab = () => {
         <div className="mx-auto max-w-4xl mt-24 space-y-28">
           {testimonials.map((t, i) => (
             <figure key={t.name} className={i % 2 ? "lg:pl-24" : "lg:pr-24"}>
-              {/* black ink spreads across to reveal the quote (reliable 20%-in-view trigger) */}
+              {/* reveal via opacity + slide (reliable on mobile; no clip-path) */}
               <motion.blockquote
                 className="np-serif text-3xl sm:text-4xl leading-[1.25] font-medium"
-                initial={{ clipPath: "inset(0 100% 0 0)" }}
-                whileInView={{ clipPath: "inset(0 0% 0 0)" }}
+                initial={{ opacity: 0, x: -30 }}
+                whileInView={{ opacity: 1, x: 0 }}
                 viewport={{ once: true, amount: 0.2 }}
-                transition={{ duration: 1.1, ease: [0.7, 0, 0.3, 1] }}
+                transition={{ duration: 0.9, ease: [0.22, 1, 0.36, 1] }}
               >
                 <span style={{ color: "#9a3b2e" }}>&ldquo;</span>{t.quote}<span style={{ color: "#9a3b2e" }}>&rdquo;</span>
               </motion.blockquote>
@@ -39,7 +39,7 @@ const WordsTab = () => {
                 initial={{ opacity: 0, y: 16 }}
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true, amount: 0.5 }}
-                transition={{ duration: 0.6, delay: 0.5 }}
+                transition={{ duration: 0.6, delay: 0.3 }}
               >
                 <span className="h-px w-10" style={{ background: "#16130d" }} />
                 <span className="font-semibold">{t.name}</span>
