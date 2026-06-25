@@ -15,11 +15,19 @@ export const useTransition = () => useContext(Ctx);
 
 const BURN_MS = 1900;
 
+const introDone = () => {
+  try {
+    return typeof window !== "undefined" && window.sessionStorage.getItem("np_intro_done") === "1";
+  } catch (e) {
+    return false;
+  }
+};
+
 export function TransitionProvider({ children }) {
   const navigate = useNavigate();
   const location = useLocation();
-  const [phase, setPhase] = useState("intro"); // intro | cover | burning | idle
-  const phaseRef = useRef("intro");
+  const [phase, setPhase] = useState(() => (introDone() ? "idle" : "intro")); // intro | cover | burning | idle
+  const phaseRef = useRef(introDone() ? "idle" : "intro");
   const sheetRef = useRef(null);
   const burnRef = useRef(null);
   const rafRef = useRef(0);
@@ -80,6 +88,11 @@ export function TransitionProvider({ children }) {
 
   const onIntroClick = useCallback(() => {
     if (phaseRef.current !== "intro") return;
+    try {
+      window.sessionStorage.setItem("np_intro_done", "1");
+    } catch (e) {
+      /* ignore */
+    }
     runBurn();
   }, [runBurn]);
 

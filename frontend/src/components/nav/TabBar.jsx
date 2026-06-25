@@ -34,6 +34,12 @@ const TabBar = () => {
     burnNavigate(to);
   };
 
+  // Words tab is a light/ivory page — use dark nav text for contrast there.
+  const lightTab = location.pathname === "/words";
+  const barStyle = lightTab
+    ? { color: "#16130d" }
+    : { mixBlendMode: "difference", color: "#ffffff" };
+
   return (
     <header
       className={
@@ -46,7 +52,7 @@ const TabBar = () => {
     >
       <div
         className="mx-auto max-w-7xl px-6 lg:px-10 h-16 flex items-center justify-between"
-        style={{ mixBlendMode: "difference", color: "#ffffff" }}
+        style={barStyle}
       >
         <a
           href="/about"
