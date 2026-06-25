@@ -103,9 +103,14 @@ const SkillsTab = () => {
                 </h3>
                 <div className="mt-4 flex flex-wrap gap-2">
                   {cat.items.map((it) => (
-                    <span
+                    <a
                       key={it}
-                      className="text-xs px-3 py-1.5 rounded-full border"
+                      href={`https://www.google.com/search?q=${encodeURIComponent(it)}`}
+                      target="_blank"
+                      rel="noreferrer"
+                      title={`Search Google for ${it}`}
+                      data-testid="skill-link"
+                      className="text-xs px-3 py-1.5 rounded-full border transition-all duration-200 hover:-translate-y-0.5 hover:brightness-125"
                       style={
                         isSite
                           ? { borderColor: "rgba(167,139,250,0.3)", background: "rgba(167,139,250,0.06)", color: "rgba(221,214,254,0.95)" }
@@ -113,7 +118,7 @@ const SkillsTab = () => {
                       }
                     >
                       {it}
-                    </span>
+                    </a>
                   ))}
                 </div>
               </motion.div>
