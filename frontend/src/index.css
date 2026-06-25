@@ -2,12 +2,16 @@
 @tailwind components;
 @tailwind utilities;
 
-@import url('https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&family=Manrope:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&family=Manrope:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&family=Playfair+Display:ital,wght@0,400;0,700;0,900;1,400;1,700&family=Pirata+One&family=Special+Elite&family=Oswald:wght@500;700&display=swap');
 
 :root {
     --font-heading: 'Outfit', system-ui, sans-serif;
     --font-body: 'Manrope', system-ui, sans-serif;
     --font-mono: 'JetBrains Mono', ui-monospace, monospace;
+    --font-serif: 'Playfair Display', Georgia, serif;
+    --font-black-letter: 'Pirata One', 'Playfair Display', serif;
+    --font-type: 'Special Elite', 'Courier New', monospace;
+    --font-condensed: 'Oswald', 'Outfit', sans-serif;
 }
 
 @layer base {
@@ -197,4 +201,242 @@
 .link-underline:hover::after {
     transform: scaleX(1);
     transform-origin: left;
+}
+
+
+/* ============================================================
+   IMMERSIVE REDESIGN — newspaper intro, burn transition, tabs
+   ============================================================ */
+
+/* lock scroll while intro/transition overlay is active */
+.no-scroll { overflow: hidden !important; }
+
+/* ---------- Newspaper overlay ---------- */
+.newspaper-overlay {
+    position: fixed;
+    inset: 0;
+    z-index: 9990;
+    overflow: hidden;
+    will-change: opacity, transform;
+}
+.newspaper-sheet {
+    position: absolute;
+    inset: 0;
+    background:
+        radial-gradient(120% 80% at 50% -10%, rgba(0,0,0,0.05), transparent 60%),
+        linear-gradient(180deg, #efe9da 0%, #e9e2d0 40%, #e3dbc6 100%);
+    color: #1a1712;
+    overflow: hidden;
+    box-shadow: inset 0 0 160px rgba(80,60,30,0.28);
+}
+/* aged paper grain + foxing */
+.newspaper-sheet::before {
+    content: '';
+    position: absolute; inset: 0;
+    background-image:
+        radial-gradient(circle at 18% 24%, rgba(120,90,40,0.10), transparent 9%),
+        radial-gradient(circle at 78% 64%, rgba(120,90,40,0.10), transparent 11%),
+        radial-gradient(circle at 62% 12%, rgba(120,90,40,0.08), transparent 8%),
+        radial-gradient(circle at 30% 82%, rgba(120,90,40,0.09), transparent 10%);
+    mix-blend-mode: multiply;
+    pointer-events: none;
+}
+.newspaper-sheet::after {
+    content: '';
+    position: absolute; inset: 0;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='120' height='120'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2'/%3E%3C/filter%3E%3Crect width='120' height='120' filter='url(%23n)' opacity='0.06'/%3E%3C/svg%3E");
+    opacity: 0.5;
+    mix-blend-mode: multiply;
+    pointer-events: none;
+}
+
+/* burning state: masked dissolve from bottom-right, displaced for jagged edge */
+.newspaper-sheet.burning {
+    -webkit-mask-image: linear-gradient(315deg,
+        rgba(0,0,0,0) 0%,
+        rgba(0,0,0,0) var(--b0, -10%),
+        #000 var(--b1, 4%),
+        #000 100%);
+    mask-image: linear-gradient(315deg,
+        rgba(0,0,0,0) 0%,
+        rgba(0,0,0,0) var(--b0, -10%),
+        #000 var(--b1, 4%),
+        #000 100%);
+    -webkit-mask-size: 100% 100%;
+    mask-size: 100% 100%;
+    filter: url(#burn-displace);
+}
+
+.burn-canvas {
+    position: absolute;
+    inset: 0;
+    z-index: 9992;
+    pointer-events: none;
+}
+
+/* ---------- Newspaper typography ---------- */
+.np-masthead {
+    font-family: var(--font-black-letter);
+    letter-spacing: 0.01em;
+    line-height: 0.9;
+}
+.np-serif { font-family: var(--font-serif); }
+.np-type { font-family: var(--font-type); }
+.np-condensed { font-family: var(--font-condensed); text-transform: uppercase; }
+.np-rule { border-top: 2px solid #1a1712; }
+.np-rule-thin { border-top: 1px solid #41382a; }
+.np-col { column-gap: 1.4rem; }
+.np-dropcap::first-letter {
+    font-family: var(--font-serif);
+    font-size: 3.1em;
+    line-height: 0.8;
+    float: left;
+    padding: 0.05em 0.08em 0 0;
+    font-weight: 900;
+}
+
+/* ---------- Click Here CTA ---------- */
+.clickhere-wrap {
+    position: absolute;
+    right: clamp(16px, 4vw, 56px);
+    bottom: clamp(16px, 4vw, 48px);
+    z-index: 9993;
+    cursor: pointer;
+}
+@keyframes ch-bob {
+    0%, 100% { transform: translateY(0) rotate(-3deg); }
+    50% { transform: translateY(-10px) rotate(2deg); }
+}
+@keyframes ch-ring {
+    0% { transform: scale(0.6); opacity: 0.9; }
+    100% { transform: scale(1.8); opacity: 0; }
+}
+.ch-stamp {
+    animation: ch-bob 1.8s ease-in-out infinite;
+    will-change: transform;
+}
+.ch-ring {
+    position: absolute; inset: 0;
+    border-radius: 9999px;
+    border: 2px solid rgba(180,30,20,0.7);
+    animation: ch-ring 1.8s ease-out infinite;
+}
+
+/* ---------- Tab page scaffolding ---------- */
+.tab-page { position: relative; min-height: 100vh; width: 100%; overflow-x: hidden; }
+.tab-bg { position: fixed; inset: 0; z-index: 0; pointer-events: none; }
+.tab-content { position: relative; z-index: 2; }
+
+/* ---------- Immersive Tab Bar ---------- */
+.tabbar {
+    position: fixed;
+    top: 0; left: 0; right: 0;
+    z-index: 60;
+    transition: background 0.4s ease, border-color 0.4s ease;
+}
+.tab-link {
+    position: relative;
+    font-family: var(--font-mono);
+    font-size: 0.72rem;
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    transition: color 0.3s ease, opacity 0.3s ease;
+}
+.tab-link .tab-num { opacity: 0.5; margin-right: 0.35rem; }
+.tab-link::after {
+    content: '';
+    position: absolute; left: 0; right: 0; bottom: -8px;
+    height: 2px;
+    background: currentColor;
+    transform: scaleX(0);
+    transform-origin: center;
+    transition: transform 0.4s cubic-bezier(0.65,0,0.35,1);
+}
+.tab-link.active::after, .tab-link:hover::after { transform: scaleX(1); }
+
+/* ---------- About: liquid canvas ---------- */
+.about-base {
+    background:
+        radial-gradient(140% 120% at 20% 0%, #11203a 0%, transparent 55%),
+        radial-gradient(120% 120% at 90% 100%, #221033 0%, transparent 55%),
+        linear-gradient(160deg, #060912 0%, #0a1020 55%, #070611 100%);
+}
+@keyframes float-orb-a { 0%,100%{ transform: translate(0,0) scale(1);} 50%{ transform: translate(6%, -5%) scale(1.15);} }
+@keyframes float-orb-b { 0%,100%{ transform: translate(0,0) scale(1);} 50%{ transform: translate(-7%, 6%) scale(1.2);} }
+.liquid-orb { position:absolute; border-radius:9999px; filter: blur(70px); opacity:0.55; mix-blend-mode: screen; will-change: transform; }
+
+/* ---------- Experience: constellation grid ---------- */
+.constellation-base {
+    background:
+        radial-gradient(100% 80% at 50% 0%, #0b1226 0%, transparent 60%),
+        linear-gradient(180deg, #04060f 0%, #060912 100%);
+}
+.constellation-grid {
+    position:absolute; inset:0;
+    background-image:
+        linear-gradient(to right, rgba(80,130,255,0.06) 1px, transparent 1px),
+        linear-gradient(to bottom, rgba(80,130,255,0.06) 1px, transparent 1px);
+    background-size: 64px 64px;
+    mask-image: radial-gradient(ellipse 70% 80% at 50% 50%, black 30%, transparent 80%);
+    -webkit-mask-image: radial-gradient(ellipse 70% 80% at 50% 50%, black 30%, transparent 80%);
+}
+.exp-line-track { position:absolute; left:50%; top:0; bottom:0; width:2px; transform:translateX(-50%); background: rgba(120,160,255,0.10); }
+.exp-line-fill { position:absolute; left:0; top:0; width:100%; background: linear-gradient(180deg, #6ea8ff, #a86bff); box-shadow: 0 0 18px 2px rgba(110,168,255,0.7); }
+.exp-node { box-shadow: 0 0 0 4px rgba(110,168,255,0.12), 0 0 22px 4px rgba(110,168,255,0.65); }
+
+/* ---------- Skills: tech nexus ---------- */
+.nexus-base {
+    background:
+        radial-gradient(120% 90% at 80% 10%, #042530 0%, transparent 55%),
+        radial-gradient(120% 90% at 10% 90%, #0a1b34 0%, transparent 55%),
+        linear-gradient(160deg, #03070c 0%, #06121a 100%);
+}
+.glass-card {
+    background: rgba(255,255,255,0.04);
+    border: 1px solid rgba(120,220,255,0.16);
+    backdrop-filter: blur(14px);
+    -webkit-backdrop-filter: blur(14px);
+    box-shadow: inset 0 1px 0 rgba(255,255,255,0.08), 0 20px 60px -30px rgba(0,200,255,0.5);
+}
+.skill-track { height: 6px; border-radius: 9999px; background: rgba(120,220,255,0.12); overflow:hidden; }
+.skill-fill { height: 100%; border-radius: 9999px; background: linear-gradient(90deg, #22d3ee, #38bdf8, #818cf8); box-shadow: 0 0 14px rgba(56,189,248,0.7); }
+
+/* ---------- Education: blueprint ---------- */
+.blueprint-base { background: linear-gradient(160deg, #061025 0%, #04101f 100%); }
+.blueprint-grid {
+    position:absolute; inset:0;
+    background-image:
+        linear-gradient(rgba(120,170,255,0.16) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(120,170,255,0.16) 1px, transparent 1px),
+        linear-gradient(rgba(120,170,255,0.06) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(120,170,255,0.06) 1px, transparent 1px);
+    background-size: 120px 120px, 120px 120px, 24px 24px, 24px 24px;
+    animation: bp-pan 40s linear infinite;
+}
+@keyframes bp-pan { from { background-position: 0 0,0 0,0 0,0 0; } to { background-position: 120px 120px,120px 120px,24px 24px,24px 24px; } }
+.blueprint-card {
+    background: rgba(8,22,46,0.55);
+    border: 1px solid rgba(120,170,255,0.3);
+    box-shadow: inset 0 0 30px rgba(80,140,255,0.08);
+}
+@keyframes draw-dash { to { stroke-dashoffset: 0; } }
+
+/* ---------- Words: editorial ink ---------- */
+.editorial-base { background: linear-gradient(180deg, #f7f3e9 0%, #efe9db 100%); color:#16130d; }
+.editorial-ghost {
+    position:absolute; inset:0; overflow:hidden; pointer-events:none;
+    font-family: var(--font-serif); font-weight:900; color:#16130d;
+}
+.ink-reveal { -webkit-mask-image: linear-gradient(90deg, #000 0%, #000 var(--ink,0%), transparent var(--ink,0%)); mask-image: linear-gradient(90deg, #000 0%, #000 var(--ink,0%), transparent var(--ink,0%)); }
+
+/* ---------- Contacts: radar ---------- */
+.radar-base { background: radial-gradient(circle at 50% 50%, #04140f 0%, #03100c 50%, #020a08 100%); }
+.magnetic { transition: transform 0.18s cubic-bezier(0.3,1.3,0.5,1); will-change: transform; }
+
+/* shared scroll overline */
+.section-overline { font-family: var(--font-mono); letter-spacing:0.28em; text-transform:uppercase; font-size:0.72rem; }
+
+/* reduce motion */
+@media (prefers-reduced-motion: reduce) {
+    .ch-stamp, .ch-ring, .liquid-orb, .blueprint-grid { animation: none !important; }
 }
