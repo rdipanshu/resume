@@ -4,8 +4,10 @@ import TabLayout from "./TabLayout";
 import SkillsBg from "../backgrounds/SkillsBg";
 import { skills } from "../../data/portfolio";
 
-const proficiency = {
-  Python: 92, JavaScript: 88, TypeScript: 82, Go: 70, Rust: 64, Java: 75, SQL: 85,
+// Technologies this very website is built with.
+const builtWith = {
+  category: "Built With · This Site",
+  items: ["React", "JavaScript", "Tailwind CSS", "Framer Motion", "FastAPI", "Python", "MongoDB"],
 };
 
 // shape generators (points relative to centre, ~ -32..32)
@@ -33,7 +35,12 @@ const triangle = () => {
   return pts;
 };
 
-const SHAPES = [ring(12, 26).concat([{ x: 0, y: 0 }]), grid(4, 4, 16), triangle()];
+const SHAPES = [
+  ring(12, 26).concat([{ x: 0, y: 0 }]),
+  grid(4, 4, 16),
+  triangle(),
+  ring(6, 25).concat(ring(6, 12)),
+];
 
 // scattered particles that magnetize together into a solid icon on scroll-in
 const ParticleIcon = ({ points, color = "#7dd3fc" }) => {
@@ -57,7 +64,7 @@ const ParticleIcon = ({ points, color = "#7dd3fc" }) => {
           }}
           initial={{ x: scatter[i].dx, y: scatter[i].dy, opacity: 0 }}
           whileInView={{ x: 0, y: 0, opacity: 1 }}
-          viewport={{ once: true, margin: "-50px" }}
+          viewport={{ once: true, amount: 0.2 }}
           transition={{ type: "spring", stiffness: 130, damping: 14, delay: i * 0.022 }}
         />
       ))}
@@ -66,6 +73,8 @@ const ParticleIcon = ({ points, color = "#7dd3fc" }) => {
 };
 
 const SkillsTab = () => {
+  const categories = [...skills, builtWith];
+
   return (
     <TabLayout testId="tab-skills" bg={<SkillsBg />}>
       <section className="px-6 lg:px-10 pt-32 pb-32 text-white">
@@ -75,50 +84,41 @@ const SkillsTab = () => {
           <p className="mt-5 text-white/60">Scroll — watch scattered particles magnetize into form.</p>
         </div>
 
-        <div className="mx-auto max-w-6xl mt-16 grid grid-cols-1 lg:grid-cols-3 gap-6">
-          {skills.map((cat, i) => (
-            <motion.div
-              key={cat.category}
-              className="glass-card rounded-2xl p-6"
-              initial={{ opacity: 0, y: 50 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true, margin: "-70px" }}
-              transition={{ duration: 0.7, delay: i * 0.08, ease: [0.22, 1, 0.36, 1] }}
-            >
-              <ParticleIcon points={SHAPES[i % SHAPES.length]} />
-              <h3 className="text-lg font-semibold text-cyan-200">{cat.category}</h3>
-              <div className="mt-4 flex flex-wrap gap-2">
-                {cat.items.map((it) => (
-                  <span key={it} className="text-xs px-3 py-1.5 rounded-full border border-cyan-300/25 bg-cyan-300/5 text-cyan-100/90">
-                    {it}
-                  </span>
-                ))}
-              </div>
-            </motion.div>
-          ))}
-        </div>
-
-        <div className="mx-auto max-w-3xl mt-20">
-          <h3 className="text-sm font-mono-accent text-cyan-300/70 mb-6">Language proficiency</h3>
-          <div className="space-y-5">
-            {skills[0].items.map((lang, i) => (
-              <div key={lang}>
-                <div className="flex justify-between text-sm mb-1.5">
-                  <span className="text-white/85">{lang}</span>
-                  <span className="text-cyan-300/80">{proficiency[lang] ?? 70}%</span>
+        <div className="mx-auto max-w-5xl mt-16 grid grid-cols-1 sm:grid-cols-2 gap-6">
+          {categories.map((cat, i) => {
+            const isSite = cat.category === builtWith.category;
+            const accent = isSite ? "#a78bfa" : "#7dd3fc";
+            return (
+              <motion.div
+                key={cat.category}
+                className="glass-card rounded-2xl p-6"
+                initial={{ opacity: 0, y: 50 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true, amount: 0.2 }}
+                transition={{ duration: 0.7, delay: (i % 2) * 0.08, ease: [0.22, 1, 0.36, 1] }}
+              >
+                <ParticleIcon points={SHAPES[i % SHAPES.length]} color={accent} />
+                <h3 className="text-lg font-semibold" style={{ color: isSite ? "#c4b5fd" : "#a5f3fc" }}>
+                  {cat.category}
+                </h3>
+                <div className="mt-4 flex flex-wrap gap-2">
+                  {cat.items.map((it) => (
+                    <span
+                      key={it}
+                      className="text-xs px-3 py-1.5 rounded-full border"
+                      style={
+                        isSite
+                          ? { borderColor: "rgba(167,139,250,0.3)", background: "rgba(167,139,250,0.06)", color: "rgba(221,214,254,0.95)" }
+                          : { borderColor: "rgba(125,211,252,0.25)", background: "rgba(125,211,252,0.05)", color: "rgba(207,250,254,0.9)" }
+                      }
+                    >
+                      {it}
+                    </span>
+                  ))}
                 </div>
-                <div className="skill-track">
-                  <motion.div
-                    className="skill-fill"
-                    initial={{ width: 0 }}
-                    whileInView={{ width: `${proficiency[lang] ?? 70}%` }}
-                    viewport={{ once: true, margin: "-40px" }}
-                    transition={{ duration: 1.1, delay: i * 0.07, ease: [0.22, 1, 0.36, 1] }}
-                  />
-                </div>
-              </div>
-            ))}
-          </div>
+              </motion.div>
+            );
+          })}
         </div>
       </section>
     </TabLayout>
