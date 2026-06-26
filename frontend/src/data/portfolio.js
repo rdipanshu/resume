@@ -26,7 +26,7 @@ export const about = {
     "Recognized for the successful implementation of measures to cut costs, streamline operations, and increase productivity. Detailed approach to maintaining a high threshold for business operations.",
   ],
   stats: [
-    { label: "Companies led / served", value: "3" },
+    { label: "Companies led / served", value: "2" },
     { label: "Current role since", value: "2024" },
     { label: "Languages coded", value: "7" },
     { label: "Sectors", value: "Power · Logistics · Software" },
@@ -44,17 +44,6 @@ export const experience = [
       "Manage primary accounts, including Uttarakhand Power Corporation Limited (UPCL) and Power Transmission Corporation of Uttarakhand Ltd. (PTCUL).",
       "Evaluate the financial aspects of projects to establish and maintain strict budget parameters.",
       "Ensure full compliance with safety regulations and maintain a secure work environment for all personnel.",
-    ],
-  },
-  {
-    role: "Freelance Software Consultant",
-    company: "DS Group",
-    period: "Contract-based",
-    location: "Remote",
-    points: [
-      "Execute task-based freelance contracts, specializing in comprehensive bug fixing, issue resolution, and system maintenance.",
-      "Develop custom scripts and implement new features to enhance overall application functionality and user experience.",
-      "Manage deliverables independently, ensuring high-quality code and timely completion of per-task milestones.",
     ],
   },
   {

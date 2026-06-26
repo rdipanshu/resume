@@ -8,7 +8,6 @@ import AboutTab from "./components/tabs/AboutTab";
 import ExperienceTab from "./components/tabs/ExperienceTab";
 import SkillsTab from "./components/tabs/SkillsTab";
 import EducationTab from "./components/tabs/EducationTab";
-import WordsTab from "./components/tabs/WordsTab";
 import ContactTab from "./components/tabs/ContactTab";
 
 function App() {
@@ -26,7 +25,6 @@ function App() {
           <Route path="/experience" element={<ExperienceTab />} />
           <Route path="/skills" element={<SkillsTab />} />
           <Route path="/education" element={<EducationTab />} />
-          <Route path="/words" element={<WordsTab />} />
           <Route path="/contact" element={<ContactTab />} />
           <Route path="*" element={<Navigate to="/about" replace />} />
         </Routes>

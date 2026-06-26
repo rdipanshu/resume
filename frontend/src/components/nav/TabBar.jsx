@@ -7,8 +7,7 @@ export const TABS = [
   { to: "/experience", n: "02", label: "Experience" },
   { to: "/skills", n: "03", label: "Skills" },
   { to: "/education", n: "04", label: "Education" },
-  { to: "/words", n: "05", label: "Words" },
-  { to: "/contact", n: "06", label: "Contacts" },
+  { to: "/contact", n: "05", label: "Contacts" },
 ];
 
 const isActive = (pathname, to) =>
@@ -36,10 +35,7 @@ const TabBar = () => {
   };
 
   // Words tab is a light/ivory page — use dark nav text for contrast there.
-  const lightTab = location.pathname === "/words";
-  const barStyle = lightTab
-    ? { color: "#16130d" }
-    : { mixBlendMode: "difference", color: "#ffffff" };
+  const barStyle = { mixBlendMode: "difference", color: "#ffffff" };
 
   return (
     <header

@@ -16,7 +16,7 @@ const ExperienceTab = () => {
         <div className="mx-auto max-w-3xl text-center">
           <div className="section-overline text-indigo-300/80 mb-4">· 02 / Experience</div>
           <h2 className="text-5xl sm:text-6xl font-semibold tracking-tight">A glowing trail of work</h2>
-          <p className="mt-5 text-white/60">Three companies. One operating playbook — cut cost, streamline, ship.</p>
+          <p className="mt-5 text-white/60">Two companies. One operating playbook — cut cost, streamline, ship.</p>
         </div>
 
         <div ref={trackRef} className="relative mx-auto max-w-5xl mt-24">
