@@ -47,6 +47,17 @@ export const experience = [
     ],
   },
   {
+    role: "Freelance Web Designer & Developer",
+    company: "Independent / Freelance",
+    period: "Ongoing",
+    location: "Remote",
+    points: [
+      "Design, build, and ship responsive websites and web applications end-to-end for clients across industries.",
+      "Own full project management — scoping, timelines, client communication, and on-time delivery.",
+      "Develop modern front-ends and integrate back-end services with a focus on performance, clean UX, and maintainable code.",
+    ],
+  },
+  {
     role: "Proprietor",
     company: "ITUS Transport",
     period: "Nov 2022 — Jul 2024",
