@@ -16,10 +16,40 @@ from datetime import datetime, timezone
 ROOT_DIR = Path(__file__).parent
 load_dotenv(ROOT_DIR / '.env')
 
-# MongoDB connection
-mongo_url = os.environ['MONGO_URL']
-client = AsyncIOMotorClient(mongo_url)
-db = client[os.environ['DB_NAME']]
+# MongoDB connection (lazy so cold starts don't crash on Vercel if envs are
+# still being wired up; individual endpoints will surface a clear error if
+# Mongo isn't configured).
+_client: AsyncIOMotorClient | None = None
+
+
+def _get_db():
+    global _client
+    mongo_url = os.environ.get('MONGO_URL')
+    db_name = os.environ.get('DB_NAME')
+    if not mongo_url or not db_name:
+        raise RuntimeError(
+            "MongoDB is not configured: set MONGO_URL and DB_NAME env vars."
+        )
+    if _client is None:
+        _client = AsyncIOMotorClient(mongo_url)
+    return _client[db_name]
+
+
+class _DBProxy:
+    """Attribute-access proxy so existing `db.collection` calls keep working
+    while the underlying client is created lazily on first use."""
+
+    def __getattr__(self, name):
+        return getattr(_get_db(), name)
+
+    def __getitem__(self, name):
+        return _get_db()[name]
+
+
+db = _DBProxy()
+# Keep a module-level `client` name so shutdown handler / tests that reference
+# it don't break; it may be None until first request.
+client = _client
 
 # Email (Resend) configuration
 resend.api_key = os.environ.get('RESEND_API_KEY')
@@ -164,4 +194,5 @@ logger = logging.getLogger(__name__)
 
 @app.on_event("shutdown")
 async def shutdown_db_client():
-    client.close()
+    if _client is not None:
+        _client.close()

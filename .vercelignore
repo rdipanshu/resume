@@ -1,0 +1,21 @@
+# Files/dirs that don't need to ship to Vercel
+node_modules
+frontend/node_modules
+frontend/build
+
+# Local artifacts / heavy assets
+screenshots
+test_reports
+tests
+backend/tests
+memory
+
+# Dev / meta
+.git
+.emergent
+*.log
+
+# Backend runtime deps live in api/requirements.txt for Vercel.
+# Keep the source but skip the big local requirements.txt so the Python
+# builder doesn't try to install dev-only libs (pandas, numpy, boto3, etc.).
+backend/requirements.txt
