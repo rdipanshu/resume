@@ -10,7 +10,7 @@ import sys
 from datetime import datetime
 
 # Get backend URL from frontend .env
-BACKEND_URL = "https://27538b73-9142-4a4f-807b-b70f3e6bf6fe.preview.emergentagent.com/api"
+BACKEND_URL = "https://resume-monorepo.preview.emergentagent.com/api"
 
 def print_section(title):
     """Print a formatted section header"""
